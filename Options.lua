@@ -1457,6 +1457,6 @@ end
 -- Init
 OTF:HookScript("OnEvent", function(self, event)
 	if event == "PLAYER_ENTERING_WORLD" and not KT.initialized then
-		modules.sec1.args = GetModulesOptionsTable()
+		modules.sec1.args = GetModulesOptionsTable() or {}
 	end
 end)
