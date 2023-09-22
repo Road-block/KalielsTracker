@@ -165,7 +165,8 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
     local artifactXP = 0    -- GetQuestLogRewardArtifactXP(questID)
     local numQuestCurrencies = 0    -- GetNumQuestLogRewardCurrencies(questID)
     local numQuestRewards = GetNumQuestLogRewards(questID)
-    local numQuestSpellRewards = GetNumQuestLogRewardSpells(questID)
+    local QuestSpellRewards = C_QuestInfoSystem.GetQuestRewardSpells(questID) or {}
+    --local numQuestSpellRewards = GetNumQuestLogRewardSpells(questID)
     local numQuestChoices = GetNumQuestLogChoices()
     local honor = 0   -- GetQuestLogRewardHonor(questID)
     if xp > 0 or
@@ -173,7 +174,7 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
             artifactXP > 0 or
             numQuestCurrencies > 0 or
             numQuestRewards > 0 or
-            numQuestSpellRewards > 0 or
+            #QuestSpellRewards > 0 or
             numQuestChoices > 0 or
             honor > 0 then
         tooltip:AddLine(" ")
@@ -195,10 +196,10 @@ function KT.GameTooltip_AddQuestRewardsToTooltip(tooltip, questID, isBonus)
             end
         end
         -- spells
-        for i = 1, numQuestSpellRewards do
-            local texture, name = GetQuestLogRewardSpell(i, questID)
-            if name and texture then
-                tooltip:AddLine(format(BONUS_OBJECTIVE_REWARD_FORMAT, texture, name), 1, 1, 1)
+        for i, spellID in ipairs(QuestSpellRewards) do
+            local spellInfo = C_QuestInfoSystem.GetQuestRewardSpellInfo(questID, spellID)
+            if spellInfo and spellInfo.name and spellInfo.texture then
+                tooltip:AddLine(format(BONUS_OBJECTIVE_REWARD_FORMAT, spellInfo.texture, spellInfo.name), 1, 1, 1)
             end
         end
         -- items
