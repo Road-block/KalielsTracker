@@ -49,8 +49,8 @@ local OverlayFrameUpdate, OverlayFrameHide, GetModulesOptionsTable, MoveModule, 
 local defaults = {
 	profile = {
 		anchorPoint = "TOPRIGHT",
-		xOffset = -85,
-		yOffset = -200,
+		xOffset = -115,
+		yOffset = -280,
 		maxHeight = 400,
 		frameScrollbar = true,
 		frameStrata = "LOW",
@@ -151,7 +151,7 @@ local options = {
 							order = 0.12,
 						},
 						slashCmd = {
-							name = cBold.." /kt|r  |cff808080...............|r  Toggle (expand/collapse) the tracker\n"..
+							name = cBold.." /kt|r  |cff808080..............|r  Toggle (expand/collapse) the tracker\n"..
 									cBold.." /kt config|r  |cff808080...|r  Show this config window\n",
 							type = "description",
 							width = "double",
@@ -1238,9 +1238,7 @@ function KT:CheckAddOn(addon, version, isUI)
 end
 
 function KT:OpenOptions()
-	InterfaceOptionsFrame_OpenToCategory(self.optionsFrame.profiles)
-	InterfaceOptionsFrame_OpenToCategory(self.optionsFrame.profiles)
-	InterfaceOptionsFrame_OpenToCategory(self.optionsFrame.general)
+	Settings.OpenToCategory(self.optionsFrame.general.name, true)
 end
 
 function KT:InitProfile(event, database, profile)
@@ -1323,21 +1321,7 @@ function KT:SetupOptions()
 	self.db.RegisterCallback(self, "OnProfileReset", "InitProfile")
 end
 
-KT.settings = {}
-InterfaceOptionsFrame:HookScript("OnHide", function(self)
-	for k, v in pairs(KT.settings) do
-		if strfind(k, "Save") then
-			KT.settings[k] = false
-		else
-			db[k] = v
-		end
-	end
-	ACR:NotifyChange(addonName)
-
-	OverlayFrameHide()
-end)
-
-hooksecurefunc("OptionsList_SelectButton", function(listFrame, button)
+SettingsPanel:HookScript("OnHide", function(self)
 	OverlayFrameHide()
 end)
 

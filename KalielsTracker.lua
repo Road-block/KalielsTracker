@@ -1717,6 +1717,7 @@ StaticPopupDialogs[addonName.."_WowheadURL"] = {
 	button2 = CLOSE,
 	hasEditBox = 1,
 	editBoxWidth = 300,
+	maxLetters = 150,
 	EditBoxOnTextChanged = function(self)
 		self:SetText(self.text)
 		self:HighlightText()

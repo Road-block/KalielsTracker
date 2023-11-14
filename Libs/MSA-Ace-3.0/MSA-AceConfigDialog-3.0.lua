@@ -7,7 +7,7 @@ local LibStub = LibStub
 local gui = LibStub("AceGUI-3.0")
 local reg = LibStub("AceConfigRegistry-3.0")
 
-local MAJOR, MINOR = "MSA-AceConfigDialog-3.0", 85  -- MSA
+local MAJOR, MINOR = "MSA-AceConfigDialog-3.0", 86  -- MSA
 local AceConfigDialog, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigDialog then return end
@@ -146,6 +146,7 @@ local stringIsLiteral = {
 	width = true,
 	image = true,
 	fontSize = true,
+	tooltipHyperlink = true,
 }
 
 --Is Never a function or method
@@ -499,6 +500,14 @@ local function OptionOnMouseOver(widget, event)
 	local appName = user.appName
 
 	GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+
+	local tooltipHyperlink = GetOptionsMemberValue("tooltipHyperlink", opt, options, path, appName)
+	if tooltipHyperlink then
+		GameTooltip:SetHyperlink(tooltipHyperlink)
+		GameTooltip:Show()
+		return
+	end
+
 	local name = GetOptionsMemberValue("name", opt, options, path, appName)
 	local desc = GetOptionsMemberValue("desc", opt, options, path, appName)
 	local usage = GetOptionsMemberValue("usage", opt, options, path, appName)
