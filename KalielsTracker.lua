@@ -1098,7 +1098,7 @@ local function SetHooks()
 
 	function QUEST_TRACKER_MODULE:OnBlockHeaderClick(block, mouseButton)  -- R
 		if ( IsModifiedClick("CHATLINK") and ChatEdit_GetActiveWindow() ) then
-			local questLink = GetQuestLink(GetQuestIDFromLogIndex(block.id));
+			local questLink = GetQuestLink(block.id);
 			if ( questLink ) then
 				ChatEdit_InsertLink(questLink);
 			end
